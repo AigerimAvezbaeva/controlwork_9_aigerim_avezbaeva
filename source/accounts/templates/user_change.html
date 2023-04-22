@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block title %}Редактировать пользователя{% endblock %}
+{% block menu_links %}
+{% endblock %}
+{% block content %}
+    <h1>Поменять личные данные</h1>
+    <form action="{% url 'change' user_obj.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+{% if not fields_only %}
+    <form action="{{ action_url }}" method="{{ form_method }}" enctype="{{ enctype }}">
+        {% csrf_token %}
+{% endif %}
+        {% for error in form.non_field_errors %}
+            <p class="error">{{ error }}</p>
+        {% endfor %}
+        {% bootstrap_form form %}
+{% if not fields_only %}
+        <br/>
+        <input type="submit" value="{{ button_text|default:"Submit" }}"/>
+    </form>
+{% endif %}
+
+        <br>
+        <input type="submit" value="Редактировать">
+    </form>
+{% endblock %}
+
