@@ -6,13 +6,13 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
 
-from webapp.forms.photos import PhotosForm
-from webapp.models import Photos
+from galery.forms import PhotoForm
+from galery.models import Photography
 
 
 class PhotoView(DetailView):
     template_name = 'photo.html'
-    model = Photos
+    model = Photography
     context_object_name = 'photo'
 
     def get(self, request, *args, **kwargs):
@@ -26,8 +26,8 @@ class PhotoView(DetailView):
 
 
 class PhotosView(ListView):
-    template_name = '../templates/index.html'
-    model = Photos
+    template_name = 'index.html'
+    model = Photography
     context_object_name = 'photos'
 
     def get_queryset(self):
@@ -36,8 +36,8 @@ class PhotosView(ListView):
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     template_name = 'photo_create.html'
-    form_class = PhotosForm
-    model = Photos
+    form_class = PhotoForm
+    model = Photography
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
@@ -53,8 +53,8 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
 
 class PhotoUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'photo_update.html'
-    form_class = PhotosForm
-    model = Photos
+    form_class = PhotoForm
+    model = Photography
     context_object_name = 'photo'
 
     # def get_success_url(self):
@@ -66,6 +66,6 @@ class PhotoUpdateView(LoginRequiredMixin, UpdateView):
 
 class PhotoDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'delete_photo.html'
-    model = Photos
+    model = Photography
     context_object_name = 'photo'
     success_url = reverse_lazy('index')

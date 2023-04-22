@@ -5,7 +5,7 @@ from django.forms.widgets import Textarea, HiddenInput, Input
 from galery.models import Photography
 
 
-class PostForm(forms.ModelForm):
+class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photography
         fields = ('description', 'photo')

@@ -15,24 +15,17 @@
     <nav class="navbar">
         <div class="container">
             <p><a href="/"><img
-                    src="{% static 'media/logo-instagram.svg' %} " alt="inst" width="35" height="35"></a> Добро
-                пожаловать в инстаграм!</p>
+                    src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-pinterest-icon-png-png-image_3562021.jpg " alt="inst" width="35" height="35"></a> Добро
+                пожаловать в Gallery!</p>
 
-        <div class="pt-2">
-            <div class="search-form d-flex">
-                <form class="d-flex" action="{% url 'profiles' %}" method="GET">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Что ищете?" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Найти</button>
-                </form>
 
-            </div>
         </div>
         {% if user.is_authenticated %}
             {% block menu_links %} {% endblock %}
         <div class="d-flex">
             <div>
                 <li class="list-unstyled pe-3">
-                    <a href="{% url 'post_create' user.pk %}">
+                    <a href="{% url 'photo_create' %}">
                         <img src="{% static 'media/add-outline.svg' %}" alt="plus"  width="25" height="25">
                     </a>
                 </li>
