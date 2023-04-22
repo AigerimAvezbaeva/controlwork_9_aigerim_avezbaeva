@@ -1,0 +1,17 @@
+{% load static %}
+{% load bootstrap5 %}
+
+<div style="margin-top: 30px;">
+  <form>
+      {% csrf_token %}
+      <div class="form-control">
+            <input id="photo"  class="" name="photo" type="file" required
+                  placeholder="Фотография" value="">
+      </div>
+      <div class="form-control">
+            <input id="description" class="" name="description" type="text" required
+               placeholder="Подпись" value="">
+      </div>
+        </form>
+</div>
+{% bootstrap_button button_type="submit" content=button_text %}
