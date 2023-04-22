@@ -1,6 +1,10 @@
 {% csrf_token %}
 {% load static %}
-{% load django_bootstrap5 %}
-{% bootstrap_form form %}
-
+{% load bootstrap5 %}
+{% csrf_token %}
+<div style="margin-top: 30px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>
+</div>
 {% bootstrap_button button_type="submit" content=button_text %}

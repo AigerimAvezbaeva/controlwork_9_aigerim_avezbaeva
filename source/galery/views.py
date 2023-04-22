@@ -43,12 +43,14 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             photo = form.save(commit=False)
+
             photo.author = request.user
             photo.save()
             return redirect('photo', pk=photo.pk)
         context = {}
         context['form'] = form
         return self.render_to_response(context)
+
 
 
 class PhotoUpdateView(LoginRequiredMixin, UpdateView):
