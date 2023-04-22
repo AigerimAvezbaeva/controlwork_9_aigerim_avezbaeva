@@ -2,7 +2,7 @@ from django import forms
 from django import forms
 from django.forms.widgets import Textarea, HiddenInput, Input
 
-from gallery.models import Photography
+from galery.models import Photography
 
 
 class PostForm(forms.ModelForm):

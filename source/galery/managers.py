@@ -1,7 +1,7 @@
 
 from django.db.models import Manager
 
-from gallery.querysets import CustomBaseQuerySet
+from galery.querysets import CustomBaseQuerySet
 
 
 class PhotographyManager(Manager):
