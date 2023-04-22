@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Photo - {{ photo.pk }}
+{% endblock %}
+
+{% block content %}
+    <div style="padding-left: 300px;">
+        <div class="d-flex flex-column">
+            <div class="border d-flex flex-column" style="width: 653px;">
+                <div>
+                    <h4 class="text-center">{{ photo.signature }}</h4>
+                </div>
+                <div class="border" style="width: 650px;">
+                    <img src="{{ photo.image.url }}" width="650" height="450" alt="post picture">
+                </div>
+                <div id="js" class="p-2"></div>
+
+                {% if photo.author == user or user.is_superuser %}
+                    <div class="p-2">
+                        <a href="{% url 'photo_update' photo.pk %}" class="btn btn-secondary">Изменить</a>
+                    </div>
+                    <div class="p-2">
+                        <a href="{% url 'photo_delete' photo.pk %}" class="btn btn-secondary">Удалить</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+            integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+
+    {% if photo.author != user and photo not in user.favorites.all %}
+        <script>
+            window.addEventListener('load', function () {
+                let js_div = document.getElementById('js');
+                const button = document.createElement('button');
+
+                js_div.appendChild(button);
+                button.setAttribute('class', 'btn btn-secondary')
+                button.setAttribute('id', 'active')
+                button.innerText = "Добавить в избранное";
+
+                let activate = $('#active')
+
+                let remove = function (evt) {
+                    let url = 'http://localhost:8000/api/remove/'
+
+                    let value = {{ photo.pk }};
+
+                    $.ajax({
+                        url: url,
+                        method: 'get',
+                        data: {
+                            "a": value
+                        },
+                        success: function (data, status) {
+                            console.log(data);
+                            console.log(status);
+
+                            let button_to_rem = document.getElementById('deactivate');
+                            button_to_rem.remove();
+                            const button2 = document.createElement('button');
+
+                            js_div.appendChild(button2);
+                            button2.setAttribute('class', 'btn btn-secondary')
+                            button2.setAttribute('id', 'activate')
+                            button2.innerText = "Добавить в избранноe";
+
+                            let deactivate = $('#activate')
+
+                            deactivate.on('click', add);
+
+                        },
+                        error: function (response, status) {
+                            console.log(status);
+                            console.log(response);
+                        }
+                    });
+                };
+
+                let add = function (evt) {
+                    let url = 'http://localhost:8000/api/add/'
+
+                    let value = {{ photo.pk }};
+
+                    $.ajax({
+                        url: url,
+                        method: 'get',
+                        data: {
+                            "a": value
+                        },
+                        success: function (data, status) {
+                            console.log(data);
+                            console.log(status);
+                            let button_to_remove = document.getElementById('active');
+                            button_to_remove.remove()
+
+                            const button2 = document.createElement('button');
+
+                            js_div.appendChild(button2);
+                            button2.setAttribute('class', 'btn btn-secondary')
+                            button2.setAttribute('id', 'deactivate')
+                            button2.innerText = "Удалить из избранного";
+
+                            let deactivate = $('#deactivate')
+
+                            deactivate.on('click', remove);
+
+
+                        },
+                        error: function (response, status) {
+                            console.log(status);
+                            console.log(response);
+                        }
+                    });
+                };
+
+                activate.on('click', add);
+
+            })
+        </script>
+    {% endif %}
+    {% if photo.author != user and photo in user.favorites.all %}
+        <script>
+            window.addEventListener('load', function () {
+                let js_div = document.getElementById('js');
+                const button = document.createElement('button');
+
+                js_div.appendChild(button);
+                button.setAttribute('class', 'btn btn-secondary')
+                button.setAttribute('id', 'deactivate')
+                button.innerText = "Убрать из избранного";
+
+                let deactive = $('#deactivate')
+
+                let remove = function (evt) {
+                    let url = 'http://localhost:8000/api/remove/'
+
+                    let value = {{ photo.pk }};
+
+                    $.ajax({
+                        url: url,
+                        method: 'get',
+                        data: {
+                            "a": value
+                        },
+                        success: function (data, status) {
+                            console.log(data);
+                            console.log(status);
+
+                            let button_to_rem = document.getElementById('deactivate');
+                            button_to_rem.remove();
+                            const button2 = document.createElement('button');
+
+                            js_div.appendChild(button2);
+                            button2.setAttribute('class', 'btn btn-secondary')
+                            button2.setAttribute('id', 'activate')
+                            button2.innerText = "Добавить в избранноe";
+
+                            let activate = $('#activate')
+
+                            activate.on('click', add);
+
+                        },
+                        error: function (response, status) {
+                            console.log(status);
+                            console.log(response);
+                        }
+                    });
+                };
+
+                let add = function (evt) {
+                    let url = 'http://localhost:8000/api/add/'
+
+                    let value = {{ photo.pk }};
+
+                    $.ajax({
+                        url: url,
+                        method: 'get',
+                        data: {
+                            "a": value
+                        },
+                        success: function (data, status) {
+                            console.log(data);
+                            console.log(status);
+                            let button_to_remove = document.getElementById('activate');
+                            button_to_remove.remove()
+
+                            const button2 = document.createElement('button');
+
+                            js_div.appendChild(button2);
+                            button2.setAttribute('class', 'btn btn-secondary')
+                            button2.setAttribute('id', 'deactivate')
+                            button2.innerText = "Убрать из избранного";
+
+                            let deactivate = $('#deactivate')
+
+                            deactivate.on('click', remove);
+
+
+                        },
+                        error: function (response, status) {
+                            console.log(status);
+                            console.log(response);
+                        }
+                    });
+                };
+
+                deactive.on('click', remove);
+
+            })
+        </script>
+
+    {% endif %}
+{% endblock %}

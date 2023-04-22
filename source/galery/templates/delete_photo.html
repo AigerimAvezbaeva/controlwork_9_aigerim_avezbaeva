@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h3 class="txt-color pt-3 pb-3">Удаление фото {{ photo.pk }}</h3>
+
+        <h1 class="text-center" style="font-size: 21px;">Вы точно хотите удалить фото?</h1>
+        <form method="POST" action="{% url "photo_delete" photo.pk %}" class="text-center">
+            {% csrf_token %}
+            <input type="submit" value="Удалить" class="btn btn-danger mt-2 ml-3 mb-3">
+            <a class="btn btn-primary mt-2 ml-3 mb-3" href="{% url "photo" photo.pk %}">Нет</a>
+        </form>
+
+{% endblock %}
+
